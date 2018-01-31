@@ -23,8 +23,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Database connection
+app.use(function(req, res, next){
+	global.connection = mysql.createConnection({
+	  	host     : 'localhost',
+	  	user     : 'root',
+	  	password     : 'password',
+  		database : 'myschool'
+	});
+	connection.connect();
+	next();
+});
+
 app.use('/', index);
-app.use('/api/v1/users', users);
+app.use('/api/v1/data', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,17 +56,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
 module.exports = app;
 
 
-//Database connection
-app.use(function(req, res, next){
-	res.locals.connection = mysql.createConnection({
-		host     : 'localhost',
-		user     : 'root',
-		password : 'password',
-		database : 'myschool'
-	});
-	res.locals.connect();
-	next();
-});
