@@ -10,6 +10,7 @@ var http = require('http');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var ui = require('./routes/ui');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use(function(req, res, next){
 });
 
 app.use('/', index);
+app.use('/ui', ui);
 app.use('/api/v1/data', users);
 
 // catch 404 and forward to error handler
