@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var mysql = require("mysql");
 
 var app = express();
 
@@ -45,7 +46,7 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-var mysql = require("mysql");
+
 //Database connection
 app.use(function(req, res, next){
 	res.locals.connection = mysql.createConnection({
