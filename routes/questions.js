@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET chapters listing. */
 router.get('/', function(req, res, next) {
-	connection.query('SELECT * from users', function (error, results, fields) {
+	connection.query('SELECT * FROM questions WHERE `status`= 1 LIMIT 1000', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 

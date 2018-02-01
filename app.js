@@ -12,7 +12,9 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var ui = require('./routes/ui');
 var subjects = require('./routes/subjects');
-
+var questions = require('./routes/questions');
+var questions = require('./routes/chapters');
+var questions = require('./routes/topics');
 var app = express();
 
 // view engine setup
@@ -43,8 +45,11 @@ app.use(function(req, res, next){
 
 app.use('/', index);
 app.use('/ui', ui);
-app.use('/api/v1/data', users);
+app.use('/api/v1/users', users);
 app.use('/api/v1/subjects', subjects);
+app.use('/api/v1/questions', questions);
+app.use('/api/v1/chapters', chapters);
+app.use('/api/v1/topics', topics);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
