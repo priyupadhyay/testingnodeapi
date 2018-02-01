@@ -13,8 +13,9 @@ var users = require('./routes/users');
 var ui = require('./routes/ui');
 var subjects = require('./routes/subjects');
 var questions = require('./routes/questions');
-var questions = require('./routes/chapters');
-var questions = require('./routes/topics');
+var chapters = require('./routes/chapters');
+var topics = require('./routes/topics');
+var countdata = require('./routes/countdata');
 var app = express();
 
 // view engine setup
@@ -55,6 +56,7 @@ app.use('/api/v1/subjects', subjects);
 app.use('/api/v1/questions', questions);
 app.use('/api/v1/chapters', chapters);
 app.use('/api/v1/topics', topics);
+app.use('/api/v1/countdata', countdata);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
