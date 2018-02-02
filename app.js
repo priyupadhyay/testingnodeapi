@@ -16,6 +16,7 @@ var questions = require('./routes/questions');
 var chapters = require('./routes/chapters');
 var topics = require('./routes/topics');
 var countdata = require('./routes/countdata');
+var questionpaper = require('./routes/questionpaper');
 var app = express();
 
 // view engine setup
@@ -57,6 +58,7 @@ app.use('/api/v1/questions', questions);
 app.use('/api/v1/chapters', chapters);
 app.use('/api/v1/topics', topics);
 app.use('/api/v1/countdata', countdata);
+app.use('/api/v1/questionpaper', questionpaper);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
