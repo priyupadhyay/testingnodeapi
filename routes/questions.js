@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:qid', function(req, res, next) {
-	var sql = 'SELECT * FROM questions WHERE `status`= 1 AND id = '+req.params.qid;
+	var sql = 'SELECT * FROM questions WHERE id = '+req.params.qid;
 	connection.query( sql, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
