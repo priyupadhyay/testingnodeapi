@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 	  		//res.charset = 'utf8';
 	  		res.setHeader('Content-Type', 'application/json');
 			  res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-			  console.log(results);
+			  
   			//If there is no error, all is good and response is 200OK.
 	  	}
   	});
