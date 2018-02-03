@@ -34,7 +34,7 @@ router.get('/:id', function(req, res, next) {
   	});
 });
 router.get('/subject/:subName', function(req, res, next) {
-	connection.query('SELECT * FROM quest_paper WHERE qsubject="'+req.params.subName+'"', function (error, results, fields) {
+	connection.query('SELECT * FROM quest_list WHERE qsubject="'+req.params.subName+'"', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
