@@ -51,7 +51,7 @@ router.get('/time/past', function(req, res, next) {
 });
 
 router.get('/:testId', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE testId='+req.params.testId, function (error, results, fields) {
+	connection.query('SELECT * FROM test_details WHERE testId='+req.params.testId, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -67,7 +67,7 @@ router.get('/:testId', function(req, res, next) {
 
 
 router.get('/history/:studentId', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE scheduled_time < NOW() AND studentId='+studentId, function (error, results, fields) {
+	connection.query('SELECT * FROM tests WHERE tests.scheduled_time < NOW() AND tests.testId=user_tests.testId AND uesr_tests.studentId='+req.params.studentId, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
