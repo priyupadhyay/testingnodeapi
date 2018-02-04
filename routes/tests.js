@@ -51,7 +51,7 @@ router.get('/time/past', function(req, res, next) {
 });
 
 router.get('/:testId', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE testId='+testId, function (error, results, fields) {
+	connection.query('SELECT * FROM tests WHERE testId='+req.params.testId, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
