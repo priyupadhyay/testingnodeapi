@@ -85,22 +85,25 @@ router.post('/',function(req,res){
   //var testId=req.body.testId;
   //var scheduled_time=req.body.scheduled_time;
   connection.query('INSERT INTO tests VALUES (?)',testId, function (error, results, fields) {});
-  res.end("yes");
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted"}}));
 });
 
 
 router.put('/:testId',function(req,res){
 	//var testId=req.params.testId;
 	//var scheduled_time=req.body.scheduled_time;
-	connection.query('UPDATE tests SET scheduled_time =? WHERE testId = ? ',scheduled_time,testId, function (error, results, fields) {});
-	res.end("yes");
+	connection.query('UPDATE tests SET scheduled_date =? WHERE test_id = ? ',scheduled_time,testId, function (error, results, fields) {});
+	res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Updated"}}));
   });
 
 
 router.delete('/:testId',function(req,res){
 	//var testId=req.params.testId;
 	//var scheduled_time=req.body.scheduled_time;
-	connection.query('DELETE FROM tests,testdetails WHERE testId = ? ',testId, function (error, results, fields) {});
-	res.end("Record Deleted");
+	connection.query('DELETE FROM tests,testdetails WHERE test_id = ? ',testId, function (error, results, fields) {});
+	res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Deleted"}}));
   });
 module.exports = router;
