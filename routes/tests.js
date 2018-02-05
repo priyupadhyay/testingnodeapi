@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/time/upcoming', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE scheduled_time >=  NOW()', function (error, results, fields) {
+	connection.query('SELECT * FROM tests WHERE end_date >=  NOW()', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -36,7 +36,7 @@ router.get('/time/upcoming', function(req, res, next) {
 
 
 router.get('/time/past', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE scheduled_time <  NOW()', function (error, results, fields) {
+	connection.query('SELECT * FROM tests WHERE end_date <  NOW()', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -67,7 +67,7 @@ router.get('/:testId', function(req, res, next) {
 
 
 router.get('/history/:studentId', function(req, res, next) {
-	connection.query('SELECT * FROM tests,user_tests WHERE tests.scheduled_time < NOW() AND tests.testId=user_tests.testId AND uesr_tests.studentId='+req.params.studentId, function (error, results, fields) {
+	connection.query('SELECT * FROM tests,user_tests WHERE tests.end_date < NOW() AND tests.testId=user_tests.testId AND uesr_tests.studentId='+req.params.studentId, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
