@@ -36,7 +36,7 @@ router.get('/type/:type', function(req, res, next) {
 });
 
 
-router.get('/type/:id', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
 	connection.query('SELECT * FROM users WHERE id='+req.params.id, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
