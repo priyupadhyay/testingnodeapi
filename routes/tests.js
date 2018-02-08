@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/time/upcoming', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE scheduled_time >=  NOW()', function (error, results, fields) {
+	connection.query('SELECT * FROM tests WHERE end_date >=  NOW()', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -36,7 +36,7 @@ router.get('/time/upcoming', function(req, res, next) {
 
 
 router.get('/time/past', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE scheduled_time <  NOW()', function (error, results, fields) {
+	connection.query('SELECT * FROM tests WHERE end_date <  NOW()', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -51,7 +51,7 @@ router.get('/time/past', function(req, res, next) {
 });
 
 router.get('/:testId', function(req, res, next) {
-	connection.query('SELECT * FROM test_details WHERE testId='+req.params.testId, function (error, results, fields) {
+	connection.query('SELECT * FROM test_details WHERE id='+req.params.testId, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -67,7 +67,7 @@ router.get('/:testId', function(req, res, next) {
 
 
 router.get('/history/:studentId', function(req, res, next) {
-	connection.query('SELECT * FROM tests,user_tests WHERE tests.scheduled_time < NOW() AND tests.testId=user_tests.testId AND uesr_tests.studentId='+req.params.studentId, function (error, results, fields) {
+	connection.query('SELECT * FROM tests,user_tests WHERE tests.end_date < NOW() AND tests.test_id=user_tests.test_id AND user_tests.user_id='+req.params.studentId, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -85,22 +85,25 @@ router.post('/',function(req,res){
   //var testId=req.body.testId;
   //var scheduled_time=req.body.scheduled_time;
   connection.query('INSERT INTO tests VALUES (?)',testId, function (error, results, fields) {});
-  res.end("yes");
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted"}}));
 });
 
 
 router.put('/:testId',function(req,res){
 	//var testId=req.params.testId;
 	//var scheduled_time=req.body.scheduled_time;
-	connection.query('UPDATE tests SET scheduled_time =? WHERE testId = ? ',scheduled_time,testId, function (error, results, fields) {});
-	res.end("yes");
+	connection.query('UPDATE tests SET scheduled_date =? WHERE test_id = ? ',scheduled_time,testId, function (error, results, fields) {});
+	res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Updated"}}));
   });
 
 
 router.delete('/:testId',function(req,res){
 	//var testId=req.params.testId;
 	//var scheduled_time=req.body.scheduled_time;
-	connection.query('DELETE FROM tests,testdetails WHERE testId = ? ',testId, function (error, results, fields) {});
-	res.end("Record Deleted");
+	connection.query('DELETE FROM tests,testdetails WHERE test_id = ? ',testId, function (error, results, fields) {});
+	res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Deleted"}}));
   });
 module.exports = router;
