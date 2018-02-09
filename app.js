@@ -16,6 +16,7 @@ var topics = require('./routes/topics');
 var countdata = require('./routes/countdata');
 var questionpaper = require('./routes/questionpaper');
 var tests = require('./routes/tests');
+var groups = require('./routes/groups');
 var app = express();
 
 // view engine setup
@@ -59,6 +60,7 @@ app.use('/api/v1/topics', topics);
 app.use('/api/v1/countdata', countdata);
 app.use('/api/v1/questionpaper', questionpaper);
 app.use('/api/v1/tests', tests);
+app.use('/api/v1/groups', groups);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
