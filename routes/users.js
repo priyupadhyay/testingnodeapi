@@ -58,6 +58,14 @@ router.get('/:id', function(req, res, next) {
 // `email` vuarchar(100) NOT NULL,
 // `type` varchar(100) NOT NULL
 
+ router.post('/test',function(req,res){
+
+ 			res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Inside Post"}}));
+  			
+ });
+
+
  router.post('/',function(req,res){
 	//var id=req.body.id;
 	var name=req.body.name;
