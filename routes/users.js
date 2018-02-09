@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 /* GET users listing. */
