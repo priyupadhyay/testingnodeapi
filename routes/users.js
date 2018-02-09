@@ -93,7 +93,7 @@ router.get('/:id', function(req, res, next) {
 	var uname=req.body.uname;
 	var email=req.body.email;
 	var type=req.body.type;
-	connection.query("INSERT INTO users SET name = '?', uname = '?', email = '?', type = '?'",[name,uname,email,type], function (error, results, fields) {
+	connection.query('INSERT INTO users SET name = ?, uname = ?, email = ?, type = ?',[name,uname,email,type], function (error, results, fields) {
 
 		if(error){
 	  		res.setHeader('Content-Type', 'application/json');
