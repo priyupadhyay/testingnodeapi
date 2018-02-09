@@ -92,7 +92,6 @@ router.post('/',function(req,res){
 		}
   });
 });
-	});
   
   
   router.delete('/:id',function(req,res){
