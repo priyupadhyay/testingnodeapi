@@ -84,7 +84,7 @@ router.get('/:id', function(req, res, next) {
 	  	} else {
 	  		//res.charset = 'utf8';
 	  		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted as : "+name.toString()}}));
+  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted as : "+name}}));
   			//If there is no error, all is good and response is 200OK.
 	  	}
 
