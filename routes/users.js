@@ -77,7 +77,7 @@ router.get('/:id', function(req, res, next) {
 			  
 	  		//res.charset = 'utf8';
 	  		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+res.insertId}}));
+  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+results.insertId}}));
   			//If there is no error, all is good and response is 200OK.
 	  	}
 	});
@@ -98,7 +98,7 @@ router.get('/:id', function(req, res, next) {
 	} else {
 		//res.charset = 'utf8';
 		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-		res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted"}}));
+		res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Updated"}}));
 		//If there is no error, all is good and response is 200OK.
 	}
 	});
