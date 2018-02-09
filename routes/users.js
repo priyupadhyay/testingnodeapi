@@ -1,10 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-//router.use(bodyParser.json());
-//router.use(bodyParser.urlencoded({ extended: false }));
-
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	connection.query('SELECT * FROM users WHERE status=1', function (error, results, fields) {
@@ -56,7 +52,6 @@ router.get('/:id', function(req, res, next) {
 });
 
    router.post('/',function(req,res){
-	//var id=req.body.id;
 	var name=req.body.name;
 	var uname=req.body.uname;
 	var email=req.body.email;
@@ -100,9 +95,9 @@ router.get('/:id', function(req, res, next) {
   
   
   router.delete('/:id',function(req,res){
-	  connection.query('UPDATE users WHERE user_id ='+req.params.id, function (error, results, fields) {});
-	  connection.query('UPDATE user_tests WHERE user_id ='+req.params.id, function (error, results, fields) {});
-	  connection.query('UPDATE group_users t2 WHERE user_id ='+req.params.id, function (error, results, fields) {});
+	  connection.query('UPDATE users SET status=0 WHERE user_id ='+req.params.id, function (error, results, fields) {});
+	  connection.query('UPDATE user_tests SET status=0 WHERE user_id ='+req.params.id, function (error, results, fields) {});
+	  connection.query('UPDATE group_users SET status=0 WHERE user_id ='+req.params.id, function (error, results, fields) {});
 	  res.end("Record Deleted");
 	});
   

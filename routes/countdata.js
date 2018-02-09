@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET chapters listing. */
 router.get('/', function(req, res, next) {
-	connection.query('SELECT (SELECT COUNT(*) FROM questions WHERE `status`= 1)  as question_count, (SELECT COUNT(*) FROM chapters) as chapter_count,	(SELECT COUNT(*) FROM subjects) as subject_count, (SELECT COUNT(*) FROM topics) as topic_count,	(SELECT COUNT(*) FROM quest_list) as questionpaper_count, (SELECT COUNT(*) FROM user) as user_count', function (error, results, fields) {
+	connection.query('SELECT (SELECT COUNT(*) FROM questions WHERE `status`= 1)  as question_count, (SELECT COUNT(*) FROM chapters) as chapter_count,	(SELECT COUNT(*) FROM subjects) as subject_count, (SELECT COUNT(*) FROM topics) as topic_count,	(SELECT COUNT(*) FROM quest_list) as questionpaper_count, (SELECT COUNT(*) FROM users) as user_count', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
