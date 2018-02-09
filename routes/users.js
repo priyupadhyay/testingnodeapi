@@ -90,7 +90,7 @@ router.get('/:id', function(req, res, next) {
 	var uname=req.body.uname;
 	var email=req.body.email;
 	var type=req.body.type;
-	  connection.query("UPDATE users SET name = ?, uname = ?, email = ?, type = ? WHERE user_id = ? ",name,uname,email,type,id, function (error, results, fields) {
+	  connection.query("UPDATE users SET name = ?, uname = ?, email = ?, type = ? WHERE user_id = ? ",[name,uname,email,type,id], function (error, results, fields) {
 		if(error){
 		res.setHeader('Content-Type', 'application/json');
 		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
