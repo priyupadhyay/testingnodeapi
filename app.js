@@ -23,7 +23,7 @@ var questionpaper = require('./routes/questionpaper');
 var tests = require('./routes/tests');
 var app = express();
 
-app.use(require('connect').bodyParser());
+//app.use(require('connect').bodyParser());
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 
