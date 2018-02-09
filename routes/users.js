@@ -36,8 +36,13 @@ router.get('/type/:type', function(req, res, next) {
 });
 
 
+<<<<<<< HEAD
 router.get('/type/:id', function(req, res, next) {
 	connection.query('SELECT * FROM users WHERE status=1 AND user_id='+req.params.id, function (error, results, fields) {
+=======
+router.get('/:id', function(req, res, next) {
+	connection.query('SELECT * FROM users WHERE id='+req.params.id, function (error, results, fields) {
+>>>>>>> 6fb60934d85231966995a7e160ccd245107c5d28
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
