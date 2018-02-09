@@ -68,10 +68,10 @@ router.get('/:id', function(req, res, next) {
 
  router.post('/',function(req,res){
 	//var id=req.body.id;
-	var name=(req.body.name).toString();
-	var uname=(req.body.uname).toString();
-	var email=(req.body.email).toString();
-	var type=(req.body.type).toString();
+	var name=req.body.name;
+	var uname=req.body.uname;
+	var email=req.body.email;
+	var type=req.body.type;
 	connection.query("INSERT INTO users SET name = '"+name+"', uname = '"+uname+"', email = '"+email+"', type = '"+type+"'", function (error, results, fields){
 
 		if(error){
@@ -81,7 +81,7 @@ router.get('/:id', function(req, res, next) {
 	  	} else {
 	  		//res.charset = 'utf8';
 	  		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted"}}));
+  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted as : "+name.toString()}}));
   			//If there is no error, all is good and response is 200OK.
 	  	}
 
