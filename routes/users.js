@@ -68,10 +68,10 @@ router.get('/:id', function(req, res, next) {
 
  router.post('/',function(req,res){
 	//var id=req.body.id;
-	var name=req.body.name;
-	var uname=req.body.uname;
-	var email=req.body.email;
-	var type=req.body.type;
+	var name=req.body.name.toString();
+	var uname=req.body.uname.toString();
+	var email=req.body.email.toString();
+	var type=req.body.type.toString();
 	connection.query("INSERT INTO users SET name = '"+name+"', uname = '"+uname+"', email = '"+email+"', type = '"+type+"'", function (error, results, fields){
 
 		if(error){
