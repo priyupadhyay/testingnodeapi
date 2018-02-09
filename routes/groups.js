@@ -55,7 +55,7 @@ router.post('/',function(req,res){
   	var name = req.body.name;
   	var description = req.body.description;
   	var trainer_id = req.body.trainer_id;
-	connection.query('INSERT INTO users SET name = ?, description = ?, trainer_id = ?',[name,description,trainer_id], function (error, results, fields) {
+	connection.query('INSERT INTO groups SET name = ?, description = ?, trainer_id = ?',[name,description,trainer_id], function (error, results, fields) {
 
 		if(error){
 	  		res.setHeader('Content-Type', 'application/json');
@@ -77,7 +77,7 @@ router.post('/',function(req,res){
 	var name = req.body.name;
 	var description = req.body.description;
 	var trainer_id = req.body.trainer_id;
-  connection.query('UPDATE users SET name = ?, description = ?, trainer_id = ? WHERE id = ?',[name,description,trainer_id,id], function (error, results, fields) {
+  connection.query('UPDATE groups SET name = ?, description = ?, trainer_id = ? WHERE id = ?',[name,description,trainer_id,id], function (error, results, fields) {
 
 	  if(error){
 			res.setHeader('Content-Type', 'application/json');
