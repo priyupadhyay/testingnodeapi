@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET groups listing. */
 router.get('/', function(req, res, next) {
-	connection.query('SELECT * FROM groups', function (error, results, fields) {
+	connection.query('SELECT * FROM groups WHERE status=1', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/:id', function(req, res, next) {
-	connection.query('SELECT * FROM groups WHERE type='+req.params.id, function (error, results, fields) {
+	connection.query('SELECT * FROM groups WHERE status=1 AND id='+req.params.id, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
