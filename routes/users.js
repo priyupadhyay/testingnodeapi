@@ -55,12 +55,6 @@ router.get('/:id', function(req, res, next) {
   	});
 });
 
-//  `user_id` int(50) NOT NULL AUTO_INCREMENT,
-// `name` varchar(100) NOT NULL,
-// `uname` varchar(100) NOT NULL,
-// `email` vuarchar(100) NOT NULL,
-// `type` varchar(100) NOT NULL
-
    router.post('/',function(req,res){
 	//var id=req.body.id;
 	var name=req.body.name;
@@ -106,7 +100,9 @@ router.get('/:id', function(req, res, next) {
   
   
   router.delete('/:id',function(req,res){
-	  connection.query('UPDATE users t1, group_users t2, user_tests t3 SET t1.status=0, t2.status=0, t3.status=0 WHERE t1.id = t2.id AND t1.id = t3.id AND t1.id ='+req.params.id, function (error, results, fields) {});
+	  connection.query('UPDATE users WHERE user_id ='+req.params.id, function (error, results, fields) {});
+	  connection.query('UPDATE user_tests WHERE user_id ='+req.params.id, function (error, results, fields) {});
+	  connection.query('UPDATE group_users t2 WHERE user_id ='+req.params.id, function (error, results, fields) {});
 	  res.end("Record Deleted");
 	});
   
