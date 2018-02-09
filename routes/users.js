@@ -64,9 +64,10 @@ router.post('/',function(req,res){
 	var uname=req.body.uname;
 	var email=req.body.email;
 	var type=req.body.type;
-	connection.query("INSERT INTO users SET name = '?', uname = '?', email = '?', type = '?'",name,uname,email,type, function (error, results, fields) {});
-	res.end("yes");
-  });
+	connection.query("INSERT INTO users SET name = '?', uname = '?', email = '?', type = '?'",[name,uname,email,type], function (error, results, fields) {});
+	res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  	res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted"}}));
+    });
   
   
   router.put('/:id',function(req,res){
