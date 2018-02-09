@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	connection.query('SELECT * FROM users', function (error, results, fields) {
+	connection.query('SELECT * FROM users WHERE status=1', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/type/:type', function(req, res, next) {
-	connection.query('SELECT * FROM users WHERE type='+req.params.type, function (error, results, fields) {
+	connection.query('SELECT * FROM users WHERE status=1 AND type='+req.params.type, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -37,7 +37,7 @@ router.get('/type/:type', function(req, res, next) {
 
 
 router.get('/type/:id', function(req, res, next) {
-	connection.query('SELECT * FROM users WHERE id='+req.params.id, function (error, results, fields) {
+	connection.query('SELECT * FROM users WHERE status=1 AND user_id='+req.params.id, function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -51,24 +51,36 @@ router.get('/type/:id', function(req, res, next) {
   	});
 });
 
+//  `user_id` int(50) NOT NULL AUTO_INCREMENT,
+// `name` varchar(100) NOT NULL,
+// `uname` varchar(100) NOT NULL,
+// `email` vuarchar(100) NOT NULL,
+// `type` varchar(100) NOT NULL
+
 router.post('/',function(req,res){
 	//var id=req.body.id;
-	//var name=req.body.name;
-	connection.query('INSERT INTO users VALUES (?)',id, function (error, results, fields) {});
+	var name=req.body.name;
+	var uname=req.body.uname;
+	var email=req.body.email;
+	var type=req.body.type;
+	connection.query('INSERT INTO users VALUES (?)',name,uname,email,type, function (error, results, fields) {});
 	res.end("yes");
   });
   
   
-  router.put('/:testId',function(req,res){
-	  //var id=req.params.id;
-	  //var name=req.body.name;
-	  connection.query('UPDATE users SET name =? WHERE id = ? ',name,id, function (error, results, fields) {});
+  router.put('/:id',function(req,res){
+	var id=req.params.id;
+	var name=req.body.name;
+	var uname=req.body.uname;
+	var email=req.body.email;
+	var type=req.body.type;
+	  connection.query('UPDATE users SET name = ?, uname = ?, email = ?, type = ? WHERE user_id = ? ',name,uname,email,type,id, function (error, results, fields) {});
 	  res.end("yes");
 	});
   
   
   router.delete('/:id',function(req,res){
-	  connection.query('DELETE FROM users t1, group_users t2, user_tests t3 USING t1, t2, t3 WHERE t1.id =  t2.id AND t1.id = t3.id AND t1.id ='+req.params.id, function (error, results, fields) {});
+	  connection.query('UPDATE users t1, group_users t2, user_tests t3 SET t1.status=0, t2.status=0, t3.status=0 WHERE t1.id = t2.id AND t1.id = t3.id AND t1.id ='+req.params.id, function (error, results, fields) {});
 	  res.end("Record Deleted");
 	});
   
