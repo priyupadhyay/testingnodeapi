@@ -39,7 +39,7 @@ router.post('/',function(req,res){
     var to = req.body.to;
     var from = req.body.from;  
   	var message = req.body.message;
-	connection.query('INSERT INTO conversations SET to = ?, from = ?, message = ?, date = NOW()',[to,from,message], function (error, results, fields) {
+	connection.query('INSERT INTO conversations SET `to` = ?, `from` = ?, message = ?, date = NOW()',[to,from,message], function (error, results, fields) {
 
 		if(error){
 	  		res.setHeader('Content-Type', 'application/json');
