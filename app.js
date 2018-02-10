@@ -62,7 +62,7 @@ app.use('/api/v1/countdata', countdata);
 app.use('/api/v1/questionpaper', questionpaper);
 app.use('/api/v1/tests', tests);
 app.use('/api/v1/groups', groups);
-app.use('/api/v1/conversations', coversations);
+app.use('/api/v1/conversations', conversations);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
