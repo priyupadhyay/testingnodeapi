@@ -35,7 +35,7 @@ router.get('/:uid', function(req, res, next) {
 
 
 router.get('/my/:aid/:bid', function(req, res, next) {
-	connection.query('SELECT * FROM `conversations` WHERE (`to` = '+req.params.aid+' AND `from` = '+req.params.bid+'`status` = 1 OR `status` =3) OR (`to` ='+req.params.bid+'from` = '+req.params.aid+' AND `status` = 2 OR `status` =3)', function (error, results, fields) {
+	connection.query('SELECT * FROM `conversations` WHERE (`to` = '+req.params.aid+' AND `from` = '+req.params.bid+'`status` = 1 OR `status` =3) OR (`to` ='+req.params.bid+'`from` = '+req.params.aid+' AND `status` = 2 OR `status` =3)', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
