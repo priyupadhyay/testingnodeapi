@@ -19,7 +19,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:uid', function(req, res, next) {
-	connection.query('SELECT * FROM `conversations_history` WHERE (`user1` = '+req.params.uid+' OR `user2` = '+req.params.uid+')', function (error, results, fields) {
+	// connection.query('SELECT * FROM `conversations_history` WHERE (`user1` = '+req.params.uid+' OR `user2` = '+req.params.uid+')', function (error, results, fields) {
+		//SELECT convo.id , convo.user1, users1.name as user1name, convo.user2, users2.name as user2name,convo.sender,convo.message FROM conversations_history convo , users users1, users users2  WHERE (convo.user1 = '+req.params.uid+' OR convo.user2 = '+req.params.uid+') AND users1.user_id = convo.user1 AND users2.user_id = convo.user2
+connection.query('SELECT convo.id , convo.user1, users1.name as user1name, convo.user2, users2.name as user2name,convo.sender,convo.message FROM conversations_history convo , users users1, users users2  WHERE (convo.user1 = '+req.params.uid+' OR convo.user2 = '+req.params.uid+') AND users1.user_id = convo.user1 AND users2.user_id = convo.user2', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -62,7 +64,7 @@ router.post('/',function(req,res){
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
 	  		//If there is error, we send the error in the error section with 500 status
 	  	} else {
-			  var count = results.convo_count;
+			  var count = results[0].convo_count;
 			  if(count<1){
 				  //insert and insert
 				  connection.query('INSERT INTO conversations SET `to` = ?, `from` = ?, message = ?, date = NOW()',[to,from,message], function (error, results, fields) {
@@ -100,7 +102,7 @@ router.post('/',function(req,res){
 						  //If there is error, we send the error in the error section with 500 status
 					  } else {
 						  
-						connection.query('UPDATE conversations_history SET `user1` = ?, `user2` = ?, message = ?, sender = ?',[to,from,message,from], function (error, results, fields) {
+						connection.query('UPDATE conversations_history SET `user1` = ?, `user2` = ?, message = ?, sender = ? WHERE (user1 =? AND user2 = ?) OR (user1 =? AND user2 = ?)',[to,from,message,from,to,from,from,to], function (error, results, fields) {
 			
 							if(error){
 								  res.setHeader('Content-Type', 'application/json');
@@ -110,7 +112,7 @@ router.post('/',function(req,res){
 								  
 								  //res.charset = 'utf8';
 								  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-								  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+results.insertId}}));
+								  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Updated "+results.insertId}}));
 								  //If there is no error, all is good and response is 200OK.
 							  }
 						});
