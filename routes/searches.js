@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 //GET searches using user id
 router.get('/:uid', function(req, res, next) {
-	connection.query('SELECT * FROM questions WHERE id IN (SELECT DISTINCT question_id FROM searches WHERE user_id = ? ORDER BY time LIMIT 10)',[req.params.uid],[req.params.uid], function (error, results, fields) {
+	connection.query('SELECT * FROM questions WHERE id IN (SELECT DISTINCT question_id FROM searches WHERE user_id = ? ORDER BY time LIMIT 10)',[req.params.uid], function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
