@@ -62,7 +62,7 @@ router.post('/',function(req,res){
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
 	  		//If there is error, we send the error in the error section with 500 status
 	  	} else {
-			  var count = results.convo_count;
+			  var count = results[0].convo_count;
 			  if(count<1){
 				  //insert and insert
 				  connection.query('INSERT INTO conversations SET `to` = ?, `from` = ?, message = ?, date = NOW()',[to,from,message], function (error, results, fields) {
