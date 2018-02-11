@@ -18,10 +18,24 @@ router.get('/', function(req, res, next) {
   	});
 });
 
-
-
 router.get('/:uid', function(req, res, next) {
-	connection.query('SELECT * FROM `conversations` WHERE (`to` = '+req.params.uid+' AND `status` = 1 OR `status` =3) OR (`from` = '+req.params.uid+' AND `status` = 2 OR `status` =3)', function (error, results, fields) {
+	connection.query('SELECT * FROM `conversations_history` WHERE (`user1` = '+req.params.uid+' OR `user2` = '+req.params.uid+')', function (error, results, fields) {
+	  	if(error){
+	  		res.setHeader('Content-Type', 'application/json');
+	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+	  		//If there is error, we send the error in the error section with 500 status
+	  	} else {
+	  		//res.charset = 'utf8';
+	  		res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  			res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+  			//If there is no error, all is good and response is 200OK.
+	  	}
+  	});
+});
+
+
+router.get('/my/:aid/:bid', function(req, res, next) {
+	connection.query('SELECT * FROM `conversations` WHERE (`to` = '+req.params.aid+' AND `from` = '+req.params.bid+'`status` = 1 OR `status` =3) OR (`to` ='+req.params.bid+'from` = '+req.params.aid+' AND `status` = 2 OR `status` =3)', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -39,20 +53,76 @@ router.post('/',function(req,res){
     var to = req.body.to;
     var from = req.body.from;  
   	var message = req.body.message;
-	connection.query('INSERT INTO conversations SET `to` = ?, `from` = ?, message = ?, date = NOW()',[to,from,message], function (error, results, fields) {
+	
+	  
+	  connection.query('SELECT COUNT(*) as convo_count FROM conversations_history WHERE (user1 =? AND user2 = ?) OR (user1 =? AND user2 = ?) ',[to,from,from,to], function (error, results, fields) {
 
 		if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
 	  		//If there is error, we send the error in the error section with 500 status
 	  	} else {
-			  
-	  		//res.charset = 'utf8';
-	  		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+results.insertId}}));
-  			//If there is no error, all is good and response is 200OK.
+			  var count = results.convo_count;
+			  if(count<1){
+				  //insert and insert
+				  connection.query('INSERT INTO conversations SET `to` = ?, `from` = ?, message = ?, date = NOW()',[to,from,message], function (error, results, fields) {
+
+					if(error){
+						  res.setHeader('Content-Type', 'application/json');
+						  res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+						  //If there is error, we send the error in the error section with 500 status
+					  } else {
+						  
+						connection.query('INSERT INTO conversations_history SET `user1` = ?, `user2` = ?, message = ?, sender = ?',[to,from,message,from], function (error, results, fields) {
+			
+							if(error){
+								  res.setHeader('Content-Type', 'application/json');
+								  res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+								  //If there is error, we send the error in the error section with 500 status
+							  } else {
+								  
+								  //res.charset = 'utf8';
+								  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+								  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+results.insertId}}));
+								  //If there is no error, all is good and response is 200OK.
+							  }
+						});
+					  }
+				});
+			  }
+			  else{
+				  //insert and update
+				  connection.query('INSERT INTO conversations SET `to` = ?, `from` = ?, message = ?, date = NOW()',[to,from,message], function (error, results, fields) {
+
+					if(error){
+						  res.setHeader('Content-Type', 'application/json');
+						  res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+						  //If there is error, we send the error in the error section with 500 status
+					  } else {
+						  
+						connection.query('UPDATE conversations_history SET `user1` = ?, `user2` = ?, message = ?, sender = ?',[to,from,message,from], function (error, results, fields) {
+			
+							if(error){
+								  res.setHeader('Content-Type', 'application/json');
+								  res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+								  //If there is error, we send the error in the error section with 500 status
+							  } else {
+								  
+								  //res.charset = 'utf8';
+								  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+								  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+results.insertId}}));
+								  //If there is no error, all is good and response is 200OK.
+							  }
+						});
+					  }
+				});
+			  }
 	  	}
 	});
+
+	 
+
+
   });
   
   
