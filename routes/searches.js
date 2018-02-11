@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 //GET treanding searches
-router.get('/treanding', function(req, res, next) {
+router.get('/trending', function(req, res, next) {
 	connection.query('SELECT * FROM questions WHERE id IN (SELECT DISTINCT question_id FROM searches ORDER BY time)', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
