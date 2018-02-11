@@ -102,7 +102,7 @@ router.post('/',function(req,res){
 						  //If there is error, we send the error in the error section with 500 status
 					  } else {
 						  
-						connection.query('UPDATE conversations_history SET `user1` = ?, `user2` = ?, message = ?, sender = ?',[to,from,message,from], function (error, results, fields) {
+						connection.query('UPDATE conversations_history SET `user1` = ?, `user2` = ?, message = ?, sender = ? WHERE (user1 =? AND user2 = ?) OR (user1 =? AND user2 = ?)',[to,from,message,from,to,from,from,to], function (error, results, fields) {
 			
 							if(error){
 								  res.setHeader('Content-Type', 'application/json');
