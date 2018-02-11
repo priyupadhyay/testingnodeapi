@@ -66,7 +66,7 @@ router.get('/:testId', function(req, res, next) {
 
 
 router.get('/history/:studentId', function(req, res, next) {
-	connection.query('SELECT * FROM tests LEFT JOIN user_tests ON user_tests.test_id = tests.test_id WHERE user_tests.status=1 AND user_tests.end_date < NOW() AND user_tests.user_id = ?',[req.params.studentId], function (error, results, fields) {
+	connection.query('SELECT * FROM tests LEFT JOIN user_tests ON user_tests.test_id = tests.test_id WHERE user_tests.status=1 AND tests.end_date < NOW() AND user_tests.user_id = ?',[req.params.studentId], function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
