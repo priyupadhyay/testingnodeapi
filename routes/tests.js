@@ -67,7 +67,22 @@ router.get('/:testId', function(req, res, next) {
 
 
 router.get('/history/:studentId', function(req, res, next) {
-	connection.query('SELECT * FROM user_tests WHERE user_tests.status=1 AND user_tests.end_date < NOW() AND user_tests.user_id='+req.params.studentId, function (error, results, fields) {
+	connection.query('SELECT * FROM tests LEFT JOIN user_tests ON user_tests.test_id = tests.test_id WHERE user_tests.status=1 AND user_tests.end_date < NOW() AND user_tests.user_id = ?',[req.params.studentId], function (error, results, fields) {
+	  	if(error){
+	  		res.setHeader('Content-Type', 'application/json');
+	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+	  		//If there is error, we send the error in the error section with 500 status
+	  	} else {
+	  		//res.charset = 'utf8';
+	  		res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  			res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+  			//If there is no error, all is good and response is 200OK.
+	  	}
+  	});
+});
+
+router.get('/upcoming/:studentId', function(req, res, next) {
+	connection.query('SELECT * FROM tests WHERE status=1 AND end_date > NOW() AND test_id IN (SELECT test_id from user_tests WHERE status=1 AND user_id = ?)',[req.params.studentId], function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
