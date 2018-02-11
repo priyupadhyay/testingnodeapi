@@ -19,7 +19,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:uid', function(req, res, next) {
-	connection.query('SELECT * FROM `conversations_history` WHERE (`user1` = '+req.params.uid+' OR `user2` = '+req.params.uid+')', function (error, results, fields) {
+	// connection.query('SELECT * FROM `conversations_history` WHERE (`user1` = '+req.params.uid+' OR `user2` = '+req.params.uid+')', function (error, results, fields) {
+		//SELECT convo.id , convo.user1, users1.name as user1name, convo.user2, users2.name as user2name,convo.sender,convo.message FROM conversations_history convo , users users1, users users2  WHERE (convo.user1 = '+req.params.uid+' OR convo.user2 = '+req.params.uid+') AND users1.user_id = convo.user1 AND users2.user_id = convo.user2
+connection.query('SELECT convo.id , convo.user1, users1.name as user1name, convo.user2, users2.name as user2name,convo.sender,convo.message FROM conversations_history convo , users users1, users users2  WHERE (convo.user1 = '+req.params.uid+' OR convo.user2 = '+req.params.uid+') AND users1.user_id = convo.user1 AND users2.user_id = convo.user2', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
