@@ -110,7 +110,7 @@ router.post('/',function(req,res){
 								  
 								  //res.charset = 'utf8';
 								  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-								  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+results.insertId}}));
+								  res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Updated "+results.insertId}}));
 								  //If there is no error, all is good and response is 200OK.
 							  }
 						});
