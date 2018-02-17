@@ -117,7 +117,8 @@ var desc=req.body.description;
 var tfi=req.body.test_file_id;
 var sch_date=req.body.scheduled_date;
 var end_date=req.body.end_date;
-connection.query('INSERT INTO tests SET title = ?, description = ?, test_file_id = ?, scheduled_date = ?,end_date = ?',[title,desc,tfi,sch_date,end_date], function (error, results, fields) {
+var group_id=req.body.group_id;
+connection.query('INSERT INTO tests SET title = ?, description = ?, test_file_id = ?, scheduled_date = ?,end_date = ?,group_id = ?',[title,desc,tfi,sch_date,end_date,group_id], function (error, results, fields) {
 
 		if(error){
 	  		res.setHeader('Content-Type', 'application/json');
@@ -139,7 +140,8 @@ var desc=req.body.description;
 var tfi=req.body.test_file_id;
 var sch_date=req.body.scheduled_date;
 var end_date=req.body.end_date;
-connection.query('UPDATE tests SET title = ?, description = ?, test_file_id = ?, scheduled_date = ?,end_date = ? WHERE test_id = ?',[title,desc,tfi,sch_date,end_date,req.params.testId], function (error, results, fields){
+var group_id=req.body.group_id;
+connection.query('UPDATE tests SET title = ?, description = ?, test_file_id = ?, scheduled_date = ?,end_date = ?,group_id = ? WHERE test_id = ?',[title,desc,tfi,sch_date,end_date,group_id,req.params.testId], function (error, results, fields){
 		if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
