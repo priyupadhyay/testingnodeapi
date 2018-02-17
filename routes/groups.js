@@ -88,6 +88,31 @@ router.post('/',function(req,res){
 	});
   });
   
+
+  router.post('/addstudent',function(req,res){
+	var stuIds = req.body.stuIds;
+	var gId = req.body.gId;
+	var str ="";
+	stuIds.forEach(element => {
+		str += "("+gId+","+element+"),"
+	});
+	str = str.slice(0,-1);
+	connection.query('INSERT INTO group_users (group_id,student_id) VALUES '+str, function (error, results, fields) {
+
+	  if(error){
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+			//If there is error, we send the error in the error section with 500 status
+		} else {
+			
+			//res.charset = 'utf8';
+			res.setHeader('Content-Type', 'application/json; charset=utf-8');
+			res.send(JSON.stringify({"status": 200, "error": null, "response": {msg: "Record Inserted "+results.insertId}}));
+			//If there is no error, all is good and response is 200OK.
+		}
+  });
+});
+
   
   router.put('/:id',function(req,res){
 	var id = req.params.id;
@@ -116,6 +141,12 @@ router.post('/',function(req,res){
 	connection.query('UPDATE group_users SET status=0 WHERE group_id ='+req.params.id, function (error, results, fields) {});
 	res.end("Record Deleted");
 	});
-  
+
+//delete students from group
+router.delete('/removestudent/:gid/:sid',function(req,res){
+	connection.query('UPDATE group_users SET status=0 WHERE group_id = ?,student_id = ?',[req.params.gid,req.param.sid], function (error, results, fields) {});
+	res.end("Record Deleted");
+	});
+
 
 module.exports = router;
