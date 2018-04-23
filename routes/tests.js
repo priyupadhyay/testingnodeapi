@@ -50,7 +50,7 @@ router.get('/time/past', function(req, res, next) {
 });
 
 router.get('/:testId', function(req, res, next) {
-	connection.query('SELECT * FROM test_details WHERE id = (SELECT test_file_id FROM tests WHERE status=1 AND test_id = ?)',[req.params.testId], function (error, results, fields) {
+	connection.query('SELECT * FROM test_details WHERE tests.id = ? AND tests.status=1 AND test_details.id = (SELECT test_file_id FROM tests WHERE status=1 AND test_id = ?)', [req.params.testId, req.params.testId], function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
