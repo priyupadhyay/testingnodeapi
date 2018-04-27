@@ -19,6 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 
+
 router.get('/time/upcoming', function(req, res, next) {
 	connection.query('SELECT * FROM tests WHERE status=1 AND end_date >=  NOW()', function (error, results, fields) {
 	  	if(error){
