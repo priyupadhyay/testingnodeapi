@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/type/:type', function(req, res, next) {
-	connection.query('SELECT * FROM users WHERE status=1 AND type='+req.params.type, function (error, results, fields) {
+	connection.query("SELECT * FROM users WHERE status=1 AND type='"+req.params.type+"'", function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
