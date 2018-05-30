@@ -88,6 +88,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//connection.end();
+connection.end();
 
 module.exports = app;
