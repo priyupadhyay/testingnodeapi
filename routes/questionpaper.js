@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET chapters listing. */
 router.get('/', function(req, res, next) {
-	connection.query('SELECT * FROM quest_list', function (error, results, fields) {
+	connection.query('SELECT * FROM test_details WHERE status=1', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
