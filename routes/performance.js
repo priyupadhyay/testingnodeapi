@@ -43,7 +43,7 @@ router.post('/', function (req, res) {
     var studentReponse = req.body.sturesponse;
     var total = req.body.total;
     var score = req.body.score;
-    connection.query('INSERT INTO users SET uid = ?, testid = ?, studentresponse = ?, score = ?, total=?, createdon=NOW()', [uid, testId, studentReponse, score, total], function (error, results, fields) {
+    connection.query('INSERT INTO performance SET uid = ?, testid = ?, studentresponse = ?, score = ?, total=?, createdon=NOW()', [uid, testId, studentReponse, score, total], function (error, results, fields) {
 
         if (error) {
             res.setHeader('Content-Type', 'application/json');
