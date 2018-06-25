@@ -19,6 +19,7 @@ var tests = require('./routes/tests');
 var groups = require('./routes/groups');
 var conversations = require('./routes/conversations');
 var searches = require('./routes/searches');
+var performance = require('./routes/performance');
 
 var app = express();
 
@@ -67,6 +68,7 @@ app.use('/api/v1/tests', tests);
 app.use('/api/v1/groups', groups);
 app.use('/api/v1/conversations', conversations);
 app.use('/api/v1/searches', searches);
+app.use('/api/v1/performance', performance);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
