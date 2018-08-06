@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET tests listing. */
 router.get('/', function(req, res, next) {
-	connection.query('SELECT * FROM tests WHERE status=1', function (error, results, fields) {
+	connection.query('SELECT T.*, u.name as groupname FROM tests as T, users as U WHERE status=1 INNER JOIN users u1 ON (T.group_id = U.user_id)', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
