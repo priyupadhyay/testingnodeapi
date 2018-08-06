@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/time/upcoming', function(req, res, next) {
-	connection.query('SELECT  T.*, G.name as group_name FROM tests as T INNER JOIN groups as G ON(T.group_id = G.id) T.WHERE status=1 AND end_date >=  NOW()', function (error, results, fields) {
+	connection.query('SELECT  T.*, G.name as group_name FROM tests as T INNER JOIN groups as G ON(T.group_id = G.id) T.WHERE status=1 AND T.end_date >=  NOW()', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
@@ -36,7 +36,7 @@ router.get('/time/upcoming', function(req, res, next) {
 });
 
 router.get('/time/past', function(req, res, next) {
-	connection.query('SELECT T.*, G.name as group_name FROM tests as T INNER JOIN groups as G ON(T.group_id = G.id) WHERE T.status=1 AND end_date <  NOW()', function (error, results, fields) {
+	connection.query('SELECT T.*, G.name as group_name FROM tests as T INNER JOIN groups as G ON(T.group_id = G.id) WHERE T.status=1 AND T.end_date <  NOW()', function (error, results, fields) {
 	  	if(error){
 	  		res.setHeader('Content-Type', 'application/json');
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
