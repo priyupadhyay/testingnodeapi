@@ -95,7 +95,8 @@ router.post('/',function(req,res){
 	var stuIds = req.body.stuIds;
 	var gId = req.body.gId;
 	var str ="";
-	stuIds.forEach(element => {
+	var stuArray = stuIds.split(',');
+	stuArray.forEach(element => {
 		str += "("+gId+","+element+"),"
 	});
 	str = str.slice(0,-1);
